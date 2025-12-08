@@ -1,6 +1,6 @@
 @echo off
 REM ==================================================
-REM VideoX-Fun General UV Runner
+REM Mnist-pth-lab General UV Runner
 REM ==================================================
 chcp 65001 >nul
 setlocal EnableDelayedExpansion

@@ -45,3 +45,31 @@ unpacked_data/
 **/images/*.png
 **/images/*.jpg
 **/images/*.jpeg
+# ──────────────────────────────
+# Aider + 各种 AI 编程助手产生的临时/缓存/配置目录
+# ──────────────────────────────
+.clinerules
+.gemini
+.kilocode
+.uv_python
+.openspec/
+/venv/
+/.venv/
+__pycache__/
+*.pyc
+
+# Aider 自己的缓存（非常重要！）
+.aider.cache/
+.aider.input.history
+.aider.output.history
+.aider.tags.cache.v3
+
+# 如果你用了 openspec 模式，还会额外产生这些（也必须忽略）
+openspec/
+# （极少数人想版本控制 spec 可以只忽略下面的子目录） 
+# openspec/.cache/
+# openspec/tmp/
+
+# 其他常见 AI 工具缓存
+.cline/
+.cursor/
