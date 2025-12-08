@@ -29,3 +29,19 @@ data/
 !data/.gitkeep
 experiments/
 !experiments/.gitkeep
+
+# IDX Tools Output
+unpacked/
+unpacked_data/
+*-ubyte
+*-ubyte.gz
+*.idx
+
+# 解包后的图片（更精确地忽略 images 子目录下的 png/jpg）
+**/images/*.png
+**/images/*.jpg
+**/images/*.jpeg
+# 解包后的图片（更精确地忽略 images 子目录下的 png/jpg）
+**/images/*.png
+**/images/*.jpg
+**/images/*.jpeg
