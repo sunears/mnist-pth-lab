@@ -102,7 +102,11 @@ Unpack IDX data into an image folder and a CSV label file.
 Pack an image folder back into IDX format (useful for creating custom datasets).
 
 ```bash
-./run-uv.sh src/pack_idx.py --images-dir unpacked_data/images --labels-csv unpacked_data/labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
+# Pack training data
+./run-uv.sh src/pack_idx.py --images-dir unpacked_data/train/images --labels-csv unpacked_data/train/labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
+
+# Pack test data
+./run-uv.sh src/pack_idx.py --images-dir unpacked_data/test/images --labels-csv unpacked_data/test/labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
 ```
 
 2.  **Run Scripts**:

@@ -102,7 +102,11 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 将图片文件夹打包回 IDX 格式（常用于制作自己的数据集）。
 
 ```bash
-./run-uv.sh src/pack_idx.py --images-dir unpacked_data/images --labels-csv unpacked_data/labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
+# 打包训练数据
+./run-uv.sh src/pack_idx.py --images-dir unpacked_data/train/images --labels-csv unpacked_data/train/labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
+
+# 打包测试数据
+./run-uv.sh src/pack_idx.py --images-dir unpacked_data/test/images --labels-csv unpacked_data/test/labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
 ```
 
 2.  **运行脚本**：
