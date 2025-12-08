@@ -73,6 +73,24 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
     uv pip install .
     ```
 
+## 数据处理工具
+
+本项目提供了两个脚本用于 MNIST 数据格式 (IDX) 与图片格式 (PNG) 之间的转换。
+
+### 1. 解包 (IDX -> PNG)
+将 IDX 格式的数据解包为图片文件夹和 CSV 标签。
+
+```cmd
+run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data
+```
+
+### 2. 打包 (PNG -> IDX)
+将图片文件夹打包回 IDX 格式（常用于制作自己的数据集）。
+
+```cmd
+run-uv.bat src\pack_idx.py --images-dir unpacked_data\images --labels-csv unpacked_data\labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
+```
+
 2.  **运行脚本**：
     ```bash
     # 训练

@@ -61,7 +61,26 @@ If you prefer running commands manually or are on Linux/macOS:
     uv pip install -r requirements.txt
     # OR install from pyproject.toml
     uv pip install .
+    uv pip install .
     ```
+
+## Data Processing Tools
+
+This project provides scripts to convert between MNIST IDX format and image format (PNG).
+
+### 1. Unpack (IDX -> PNG)
+Unpack IDX data into an image folder and a CSV label file.
+
+```cmd
+run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data
+```
+
+### 2. Pack (PNG -> IDX)
+Pack an image folder back into IDX format (useful for creating custom datasets).
+
+```cmd
+run-uv.bat src\pack_idx.py --images-dir unpacked_data\images --labels-csv unpacked_data\labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
+```
 
 2.  **Run Scripts**:
     ```bash

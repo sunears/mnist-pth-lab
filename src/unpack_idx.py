@@ -142,12 +142,6 @@ def main():
 
     # 执行保存操作
     save_images_and_labels(images, labels, args.out_dir, fmt=args.format, write_txt=args.write_txt)
-    
-    # 获取日志记录器 (测试用)
-    logger = get_logger("Test")
-    
-    # 使用 logger 输出 helloworld (保留之前的测试逻辑)
-    logger.info("helloworld")
 
 if __name__ == "__main__":
     main()
