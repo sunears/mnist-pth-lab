@@ -91,7 +91,11 @@ This project provides scripts to convert between MNIST IDX format and image form
 Unpack IDX data into an image folder and a CSV label file.
 
 ```bash
-./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data
+# Unpack training data
+./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/train-images-idx3-ubyte --labels-idx data/MNIST/raw/train-labels-idx1-ubyte --out-dir unpacked_data/train
+
+# Unpack test data
+./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data/test
 ```
 
 ### 2. Pack (PNG -> IDX)

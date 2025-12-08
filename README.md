@@ -91,7 +91,11 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 将 IDX 格式的数据解包为图片文件夹和 CSV 标签。
 
 ```bash
-./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data
+# 解包训练数据
+./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/train-images-idx3-ubyte --labels-idx data/MNIST/raw/train-labels-idx1-ubyte --out-dir unpacked_data/train
+
+# 解包测试数据
+./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data/test
 ```
 
 ### 2. 打包 (PNG -> IDX)
