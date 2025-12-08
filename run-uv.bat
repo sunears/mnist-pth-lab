@@ -26,8 +26,8 @@ if exist "%~dp0uv.exe" (
 echo [Debug] UV Executable: "!UV_EXE!"
 
 REM 2. Configure UV
-REM Install Python into ./uv/python to keep it self-contained
-set "UV_PYTHON_INSTALL_DIR=%~dp0uv\python"
+REM Install Python into ./uvwin/python to keep it self-contained (avoid conflict with Linux uv binary)
+set "UV_PYTHON_INSTALL_DIR=%~dp0uvwin\python"
 set "UV_MANAGED_PYTHON=true"
 
 REM 3. Sync Environment
