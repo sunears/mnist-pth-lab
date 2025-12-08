@@ -1,0 +1,161 @@
+Metadata-Version: 2.4
+Name: mnist-pth-lab
+Version: 0.1.0
+Summary: A PyTorch MNIST classification project with complete training and evaluation pipeline.
+Author-email: User <user@example.com>
+License: MIT License
+        
+        Copyright (c) 2025 Antigravity
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/example/mnist-pth-lab
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch
+Requires-Dist: torchvision
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: scikit-learn
+Requires-Dist: tqdm
+Requires-Dist: seaborn
+Dynamic: license-file
+
+# mnist-pth-lab
+
+一个完整的 PyTorch MNIST 手写数字识别项目，包含规范的训练、评估和实验管理流程。
+
+## 项目概览
+
+本项目展示了一个生产级的 PyTorch 工作流：
+- **模型**：使用带 Dropout 的简单 CNN 进行稳健分类。
+- **数据**：使用 `torchvision` 自动下载和处理 MNIST 数据。
+- **训练**：完整的训练循环，包含 `tqdm` 进度条、验证集记录和最佳模型保存。
+- **评估**：全面的评估指标（准确率、精确率、召回率、F1 分数）、混淆矩阵以及错误样本可视化。
+- **管理**：使用 `uv` 进行超快速的依赖管理和虚拟环境配置。
+
+## 前置要求：安装 `uv`
+
+本项目推荐使用 **uv** 进行 Python 包管理。
+
+1.  **下载 uv**：
+    -   访问 [uv releases](https://github.com/astral-sh/uv/releases) 下载 `uv-x86_64-pc-windows-msvc.zip`（适用于 Windows）。
+    -   解压并将 `uv.exe` 放入本项目根目录，**或者**将其添加到系统 PATH 环境变量中。
+
+2.  **故障排除**：
+    -   如果 `run-uv.bat` 找不到 `uv`，请手动将 `uv.exe` 放在脚本同级目录下。
+
+## 快速开始 (Windows)
+
+我们提供了一键运行脚本 `run-uv.bat`，可自动处理环境创建和脚本执行。
+
+### 1. 训练
+训练模型 5 个 epoch（默认）并保存到 `models/mnist_cnn.pth`。
+
+```cmd
+run-uv.bat src\train.py --epochs 5 --batch-size 64 --save-path models\mnist_cnn.pth
+```
+*注意：首次运行会自动在 `.venv` 中创建虚拟环境并安装依赖。*
+
+#### 关键参数说明
+
+| 参数 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `src\train.py` | - | 训练脚本路径 |
+| `--epochs` | `5` | **训练轮数**。即数据集被完整遍历的次数。增加此值通常能提高准确率，但过大可能导致过拟合。 |
+| `--batch-size` | `64` | **批大小**。每次参数更新时使用的样本数量。 |
+| `--save-path` | `models...` | 模型保存路径 (`.pth` 文件)。 |
+| `--lr` | `0.001` | 学习率。控制模型学习速度。 |
+
+### 2. 评估
+在测试集上评估训练好的模型。
+
+```cmd
+run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\output
+```
+查看 `experiments\output` 目录获取评估报告和混淆矩阵。
+
+## 手动使用方法
+
+如果您更习惯手动运行命令，或者在使用 Linux/macOS：
+
+1.  **创建环境并安装依赖**：
+    ```bash
+    # 创建虚拟环境
+    uv venv .venv --python 3.10
+    
+    # 激活环境
+    # Windows:
+    .venv\Scripts\activate
+    # Linux/Mac:
+    source .venv/bin/activate
+    
+    # 安装依赖
+    uv pip install -r requirements.txt
+    # 或者从 pyproject.toml 安装
+    uv pip install .
+    ```
+
+2.  **运行脚本**：
+    ```bash
+    # 训练
+    python src/train.py --epochs 5 --save-path models/mnist_cnn.pth
+    
+    # 评估
+    python src/eval.py --model models\mnist_cnn.pth
+    ```
+
+## 文件结构
+
+```
+mnist-pth-lab/
+├── pyproject.toml       # 项目元数据和依赖配置
+├── requirements.txt     # 依赖列表（用于兼容传统方式）
+├── run-uv.bat           # Windows 下的 UV 辅助运行脚本
+├── models/              # 存放保存的 .pth 模型
+├── data/                # 下载的 MNIST 数据
+├── experiments/         # 日志、图表和输出产物
+└── src/
+    ├── model.py         # CNN 模型架构定义
+    ├── dataset.py       # DataLoaders 和数据变换
+    ├── train.py         # 训练循环与日志记录
+    ├── eval.py          # 评估指标与混淆矩阵
+    └── utils.py         # 随机种子、日志、保存辅助函数
+```
+
+## GitHub Actions (CI/CD)
+
+要在 GitHub 上自动化训练或测试，可以使用 `astral-sh/setup-uv` action。
+
+`.github/workflows/test.yml` 示例片段：
+```yaml
+steps:
+  - uses: actions/checkout@v4
+  - uses: astral-sh/setup-uv@v1
+  - run: uv sync
+  - run: uv run python src/train.py --epochs 1  # 冒烟测试
+```
+
+## 许可证 (License)
+
+MIT License. 详见 `LICENSE` 文件。

@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/dataset.py
+src/eval.py
+src/model.py
+src/train.py
+src/utils.py
+src/mnist_pth_lab.egg-info/PKG-INFO
+src/mnist_pth_lab.egg-info/SOURCES.txt
+src/mnist_pth_lab.egg-info/dependency_links.txt
+src/mnist_pth_lab.egg-info/requires.txt
+src/mnist_pth_lab.egg-info/top_level.txt
