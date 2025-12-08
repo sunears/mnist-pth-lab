@@ -42,6 +42,31 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 ```
 Check `experiments\output` for the evaluation report and confusion matrix.
 
+### 3. Data Processing Tools
+This project provides scripts to convert between MNIST IDX format and image format (PNG).
+
+#### Unpack (IDX -> PNG)
+Unpack IDX data into an image folder and a CSV label file.
+
+```cmd
+:: Unpack training data
+run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\train-images-idx3-ubyte --labels-idx data\MNIST\raw\train-labels-idx1-ubyte --out-dir unpacked_data\train
+
+:: Unpack test data
+run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data\test
+```
+
+#### Pack (PNG -> IDX)
+Pack an image folder back into IDX format (useful for creating custom datasets).
+
+```cmd
+:: Pack training data
+run-uv.bat src\pack_idx.py --images-dir unpacked_data\train\images --labels-csv unpacked_data\train\labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
+
+:: Pack test data
+run-uv.bat src\pack_idx.py --images-dir unpacked_data\test\images --labels-csv unpacked_data\test\labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
+```
+
 ## Quick Start (Linux/macOS)
 
 We provide a one-click runner script `run-uv.sh` that handles environment creation and execution automatically.

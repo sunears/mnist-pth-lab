@@ -42,6 +42,31 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 ```
 查看 `experiments\output` 目录获取评估报告和混淆矩阵。
 
+### 3. 数据处理工具
+本项目提供了两个脚本用于 MNIST 数据格式 (IDX) 与图片格式 (PNG) 之间的转换。
+
+#### 解包 (IDX -> PNG)
+将 IDX 格式的数据解包为图片文件夹和 CSV 标签。
+
+```cmd
+:: 解包训练数据
+run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\train-images-idx3-ubyte --labels-idx data\MNIST\raw\train-labels-idx1-ubyte --out-dir unpacked_data\train
+
+:: 解包测试数据
+run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data\test
+```
+
+#### 打包 (PNG -> IDX)
+将图片文件夹打包回 IDX 格式（常用于制作自己的数据集）。
+
+```cmd
+:: 打包训练数据
+run-uv.bat src\pack_idx.py --images-dir unpacked_data\train\images --labels-csv unpacked_data\train\labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
+
+:: 打包测试数据
+run-uv.bat src\pack_idx.py --images-dir unpacked_data\test\images --labels-csv unpacked_data\test\labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
+```
+
 ## 快速开始 (Linux/macOS)
 
 我们提供了一键运行脚本 `run-uv.sh`，可自动处理环境创建和脚本执行。
