@@ -42,9 +42,29 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 ```
 Check `experiments\output` for the evaluation report and confusion matrix.
 
+## Quick Start (Linux/macOS)
+
+We provide a one-click runner script `run-uv.sh` that handles environment creation and execution automatically.
+
+### 1. Training
+Train the model for 5 epochs (default) and save to `models/mnist_cnn.pth`.
+
+```bash
+./run-uv.sh src/train.py --epochs 5 --batch-size 64 --save-path models/mnist_cnn.pth
+```
+*Note: The first run will automatically create a virtual environment in `.venv` and install dependencies.*
+
+### 2. Evaluation
+Evaluate the trained model on the test set.
+
+```bash
+./run-uv.sh src/eval.py --model models/mnist_cnn.pth --output-dir experiments/output
+```
+Check `experiments/output` for the evaluation report and confusion matrix.
+
 ## Manual Usage
 
-If you prefer running commands manually or are on Linux/macOS:
+If you prefer running commands manually, you can follow these steps:
 
 1.  **Create Environment & Install**:
     ```bash
@@ -61,7 +81,6 @@ If you prefer running commands manually or are on Linux/macOS:
     uv pip install -r requirements.txt
     # OR install from pyproject.toml
     uv pip install .
-    uv pip install .
     ```
 
 ## Data Processing Tools
@@ -71,15 +90,15 @@ This project provides scripts to convert between MNIST IDX format and image form
 ### 1. Unpack (IDX -> PNG)
 Unpack IDX data into an image folder and a CSV label file.
 
-```cmd
-run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data
+```bash
+./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data
 ```
 
 ### 2. Pack (PNG -> IDX)
 Pack an image folder back into IDX format (useful for creating custom datasets).
 
-```cmd
-run-uv.bat src\pack_idx.py --images-dir unpacked_data\images --labels-csv unpacked_data\labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
+```bash
+./run-uv.sh src/pack_idx.py --images-dir unpacked_data/images --labels-csv unpacked_data/labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
 ```
 
 2.  **Run Scripts**:
@@ -98,6 +117,10 @@ mnist-pth-lab/
 ├── pyproject.toml       # Project metadata and dependencies
 ├── requirements.txt     # Dependency list (legacy/compat)
 ├── run-uv.bat           # Windows helper script for UV
+├── run-uv.sh            # Linux/macOS helper script for UV
+├── AGENTS.md            # AI assistant development guide
+├── CLINE.md             # CLINE development guide
+├── gemini.md            # Gemini development guide
 ├── models/              # Saved .pth models
 ├── data/                # Downloaded MNIST data
 ├── experiments/         # Logs, charts, and artifacts

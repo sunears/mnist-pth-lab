@@ -34,16 +34,6 @@ run-uv.bat src\train.py --epochs 5 --batch-size 64 --save-path models\mnist_cnn.
 ```
 *注意：首次运行会自动在 `.venv` 中创建虚拟环境并安装依赖。*
 
-#### 关键参数说明
-
-| 参数 | 默认值 | 说明 |
-| :--- | :--- | :--- |
-| `src\train.py` | - | 训练脚本路径 |
-| `--epochs` | `5` | **训练轮数**。即数据集被完整遍历的次数。增加此值通常能提高准确率，但过大可能导致过拟合。 |
-| `--batch-size` | `64` | **批大小**。每次参数更新时使用的样本数量。 |
-| `--save-path` | `models...` | 模型保存路径 (`.pth` 文件)。 |
-| `--lr` | `0.001` | 学习率。控制模型学习速度。 |
-
 ### 2. 评估
 在测试集上评估训练好的模型。
 
@@ -52,9 +42,29 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 ```
 查看 `experiments\output` 目录获取评估报告和混淆矩阵。
 
+## 快速开始 (Linux/macOS)
+
+我们提供了一键运行脚本 `run-uv.sh`，可自动处理环境创建和脚本执行。
+
+### 1. 训练
+训练模型 5 个 epoch（默认）并保存到 `models/mnist_cnn.pth`。
+
+```bash
+./run-uv.sh src/train.py --epochs 5 --batch-size 64 --save-path models/mnist_cnn.pth
+```
+*注意：首次运行会自动在 `.venv` 中创建虚拟环境并安装依赖。*
+
+### 2. 评估
+在测试集上评估训练好的模型。
+
+```bash
+./run-uv.sh src/eval.py --model models/mnist_cnn.pth --output-dir experiments/output
+```
+查看 `experiments/output` 目录获取评估报告和混淆矩阵。
+
 ## 手动使用方法
 
-如果您更习惯手动运行命令，或者在使用 Linux/macOS：
+如果您更习惯手动运行命令，可以参考以下步骤：
 
 1.  **创建环境并安装依赖**：
     ```bash
@@ -80,15 +90,15 @@ run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\out
 ### 1. 解包 (IDX -> PNG)
 将 IDX 格式的数据解包为图片文件夹和 CSV 标签。
 
-```cmd
-run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data
+```bash
+./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data
 ```
 
 ### 2. 打包 (PNG -> IDX)
 将图片文件夹打包回 IDX 格式（常用于制作自己的数据集）。
 
-```cmd
-run-uv.bat src\pack_idx.py --images-dir unpacked_data\images --labels-csv unpacked_data\labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
+```bash
+./run-uv.sh src/pack_idx.py --images-dir unpacked_data/images --labels-csv unpacked_data/labels.csv --out-images-idx new-images-idx3-ubyte.gz --out-labels-idx new-labels-idx1-ubyte.gz
 ```
 
 2.  **运行脚本**：
@@ -97,7 +107,7 @@ run-uv.bat src\pack_idx.py --images-dir unpacked_data\images --labels-csv unpack
     python src/train.py --epochs 5 --save-path models/mnist_cnn.pth
     
     # 评估
-    python src/eval.py --model models\mnist_cnn.pth
+    python src/eval.py --model models/mnist_cnn.pth
     ```
 
 ## 文件结构
@@ -107,6 +117,10 @@ mnist-pth-lab/
 ├── pyproject.toml       # 项目元数据和依赖配置
 ├── requirements.txt     # 依赖列表（用于兼容传统方式）
 ├── run-uv.bat           # Windows 下的 UV 辅助运行脚本
+├── run-uv.sh            # Linux/macOS 下的 UV 辅助运行脚本
+├── AGENTS.md            # AI 助手开发指南
+├── CLINE.md             # CLINE 开发指南
+├── gemini.md            # Gemini 开发指南
 ├── models/              # 存放保存的 .pth 模型
 ├── data/                # 下载的 MNIST 数据
 ├── experiments/         # 日志、图表和输出产物
