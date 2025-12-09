@@ -165,6 +165,7 @@ mnist-pth-lab/
     ├── train.py         # 训练循环与日志记录
     ├── eval.py          # 评估指标与混淆矩阵
     └── utils.py         # 随机种子、日志、保存辅助函数
+    └── linear计算过程.md # 线性层计算过程说明（中文）
 ```
 
 ## GitHub Actions (CI/CD)
