@@ -164,6 +164,13 @@ mnist-pth-lab/
     ├── eval.py          # Metrics & confusion matrix
     └── utils.py         # Seeds, logging, saving helpers
     └── linear计算过程.md # Linear layer computation notes (Chinese)
+    └── targets 和data.md # MNIST `data` and `targets` explanation (Chinese)
+
+## Documentation
+
+- `linear计算过程.md` — Linear layer computation notes (Chinese).
+- `targets 和data.md` — MNIST `data` vs `targets` explanation and examples (Chinese).
+- `docs/targets_and_data_en.md` — English quick guide to `targets` and `data` (in `docs/`).
 ```
 
 ## GitHub Actions (CI/CD)

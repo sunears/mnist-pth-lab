@@ -166,6 +166,13 @@ mnist-pth-lab/
     ├── eval.py          # 评估指标与混淆矩阵
     └── utils.py         # 随机种子、日志、保存辅助函数
     └── linear计算过程.md # 线性层计算过程说明（中文）
+    └── targets 和data.md  # MNIST data 与 targets 说明（中文示例）
+
+## 文档
+
+- `linear计算过程.md` — 线性层计算过程说明（中文）。
+- `targets 和data.md` — 关于 MNIST `data` 与 `targets` 的详解与示例（中文）。
+- `docs/targets_and_data_en.md` — `targets_and_data` 的英文快速指南（docs 目录）。
 ```
 
 ## GitHub Actions (CI/CD)
