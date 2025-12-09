@@ -163,6 +163,7 @@ mnist-pth-lab/
     ├── train.py         # Training loop & logging
     ├── eval.py          # Metrics & confusion matrix
     └── utils.py         # Seeds, logging, saving helpers
+    └── linear计算过程.md # Linear layer computation notes (Chinese)
 ```
 
 ## GitHub Actions (CI/CD)
