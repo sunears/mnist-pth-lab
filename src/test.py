@@ -1,25 +1,56 @@
 from utils import get_logger
-
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n - 1):
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    return arr
-
+from torch import nn
+from torch import Tensor
 def main():
-
+    linear = nn.Linear(3, 5)
+    linear.state_dict()   # 只是触发一下参数初始化
+    
     logger = get_logger("Test")
     
-    # 使用 logger 输出 helloworld (保留之前的测试逻辑)
-    logger.info("helloworld")
+    # 先打印一个空行，让输出更清爽
+    logger.info("")  # 或者 logger.info("\n")
+    
+    # 带颜色的关键一行（绿色 + 加粗）
+    logger.info(
+        "\033[1;32mLinear layer state_dict:\033[0m\n%s",
+        linear.state_dict()
+    )
+    
+    # input=Tensor([[1.0, 2.0, 3.0]])
+    # output=linear(input)
+    # logger.info("\033[1;32mLinear layer input:\033[0m")
+    # logger.info("input: \n%s", input)
+    # logger.info("\033[1;32mLinear layer output:\033[0m")
+    # logger.info("output: \n%s", output)
+    
+    # input=Tensor([
+    #     [0.5, 1.5, -2.0],
+    #     [3.0, -0.5, 2.0]
+    # ])
+    # output=linear(input)
+    # logger.info("\033[1;32mLinear layer new input:\033[0m")
+    # logger.info("input: \n%s", input)
+    # logger.info("\033[1;32mLinear layer new output:\033[0m")
+    # logger.info("output: \n%s", output)
 
-    # 冒泡排序测试
-    test_list = [64, 34, 25, 12, 22, 11, 90]
-    logger.info(f"原始列表: {test_list}")
-    sorted_list = bubble_sort(test_list.copy()) # 复制列表以避免修改原始列表
-    logger.info(f"排序后列表: {sorted_list}")
-
+    input=Tensor([
+        [
+            [1.0, 2.0, 3.0],
+            [4, 5, 6],
+        ],  
+        [
+            [11, 22, 33],
+            [44, 55, 66],
+        ],
+    ])
+    output=linear(input)
+    logger.info("\033[1;32mLinear layer 3D input shape:\033[0m")
+    logger.info(input.shape)
+    logger.info("\033[1;32mLinear layer 3D input:\033[0m")
+    logger.info("input: \n%s", input)
+    logger.info("\033[1;32mLinear layer 3D output:\033[0m")
+    logger.info("output: \n%s", output)
+    logger.info("\033[1;32mLinear layer 3D output shape:\033[0m")
+    logger.info(output.shape)
 if __name__ == "__main__":
     main()
