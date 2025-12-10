@@ -1,8 +1,1 @@
-dataset
-eval
-model
-pack_idx
-test
-train
-unpack_idx
-utils
+mnist_pth_lab
