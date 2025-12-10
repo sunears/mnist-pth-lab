@@ -195,3 +195,23 @@ steps:
 ## License
 
 MIT License. See `LICENSE` for details.
+
+## FAQ
+
+- **Q: Why does README recommend `python -m mnist_pth_lab.*`?**
+    - A: The project uses a `src` layout (package in `src/mnist_pth_lab/`). Running via `python -m mnist_pth_lab.<module>` ensures imports resolve like an installed package and avoids relative import problems that can occur when running scripts directly from `src/`.
+
+- **Q: I don't have `uv`. Can I still run the project?**
+    - A: Yes. `uv` is recommended to simplify environment setup. Without `uv` create a virtualenv and run `pip install -r requirements.txt` or `pip install -e .`.
+
+- **Q: How do I install for development?**
+    - A: Inside a `uv` venv or a manually created virtualenv run `uv pip install -e .` (or `pip install -e .`) to enable editable installs.
+
+- **Q: What's the difference between `run-uv.bat` and `run-uv.sh`?**
+    - A: They provide the same helper behavior for different platforms — Windows uses `run-uv.bat`, Unix-like systems use `run-uv.sh`. Both call `uv` to prepare the environment and execute the given command.
+
+- **Q: Will this documentation change affect my saved models or experiments?**
+    - A: No. This is a documentation-only change. Existing model files (for example `models/mnist_cnn.pth`) remain untouched unless you explicitly overwrite them by re-running training with the same save path.
+
+- **Q: Where to report issues or request features?**
+    - A: Please open an Issue in the repository or contact the maintainers listed in the README.

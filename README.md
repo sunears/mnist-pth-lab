@@ -155,3 +155,23 @@ steps:
 ## 许可证 (License)
 
 MIT License. 详见 `LICENSE` 文件。
+
+## 常见问题（FAQ）
+
+- **Q：为何 README 中推荐使用 `python -m mnist_pth_lab.*` 而不是 `python src/*.py`？**
+    - A：项目已采用 `src` layout（代码位于 `src/mnist_pth_lab/`），使用 `python -m mnist_pth_lab.<module>` 能保证模块导入路径正确且与可安装包行为一致，避免相对导入错误。
+
+- **Q：我没有 `uv`，还能运行项目吗？**
+    - A：可以，但推荐使用 `uv` 以便快速创建虚拟环境并安装依赖。若不使用 `uv`，请自行创建并激活虚拟环境，然后 `pip install -r requirements.txt` 或 `pip install -e .`。
+
+- **Q：如何为开发者模式安装项目？**
+    - A：在 `uv` 环境或自建 venv 中运行 `uv pip install -e .`（或 `pip install -e .`），这样修改源码后无需重新安装即可直接运行。
+
+- **Q：`run-uv.bat` 与 `run-uv.sh` 有何不同？**
+    - A：功能相同，分别为 Windows 与 Linux/macOS 的便捷脚本，内部会使用 `uv` 来创建/激活虚拟环境并在该环境中执行命令。
+
+- **Q：我需要重新训练模型吗？会不会破坏之前的实验结果？**
+    - A：本次变更仅限文档示例，不会修改训练或模型保存逻辑。已保存的模型文件（如 `models/mnist_cnn.pth`）不会被覆盖，除非你主动运行训练并指定相同保存路径。
+
+- **Q：哪里可以报告问题或请求新特性？**
+    - A：请在仓库 Issues 中提交，或直接通过仓库 README 中提供的联系方式联系维护者。
