@@ -29,3 +29,9 @@ dependencies = [
 
 [project.urls]
 "Homepage" = "https://github.com/example/mnist-pth-lab"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
