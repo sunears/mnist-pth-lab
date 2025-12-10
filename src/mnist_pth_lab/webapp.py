@@ -1,3 +1,16 @@
+"""
+模块说明（中文）：
+`webapp.py` 提供一个轻量级 Flask Web 服务，包含：
+- 首页：手写数字画板、在线预测与卷积核激活可视化（`/`）。
+- 训练演示页：实时训练日志与曲线（`/training_demo`，配合 `src/mnist_pth_lab/training_demo.py` 使用）。
+
+运行示例：
+```powershell
+run-uv.bat python -m mnist_pth_lab.webapp
+# 访问 http://localhost:5000 或 http://localhost:5000/training_demo
+```
+"""
+
 import io
 import os
 import base64
@@ -9,6 +22,7 @@ import torchvision.transforms as T
 
 from mnist_pth_lab.model import build_model
 from mnist_pth_lab.utils import load_model, get_logger
+from mnist_pth_lab import training_demo
 
 
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), 'templates'), static_folder=os.path.join(os.path.dirname(__file__), 'static'))
@@ -142,6 +156,37 @@ def visualize():
     kernels2 = kernels_to_imgs(model.conv2, topk)
 
     return jsonify({'conv1_top': conv1_top, 'conv2_top': conv2_top, 'kernels1': kernels1, 'kernels2': kernels2})
+
+
+@app.route('/training_demo')
+def training_demo_page():
+    return render_template('training_demo.html')
+
+
+@app.route('/training_demo/start', methods=['POST'])
+def start_training():
+    data = request.json
+    epochs = int(data.get('epochs', 3))
+    batch_size = int(data.get('batch_size', 64))
+    lr = float(data.get('lr', 0.001))
+    device = data.get('device', 'cpu')
+    
+    try:
+        training_demo.start_training(epochs, batch_size, lr, device)
+        return jsonify({'status': 'started'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+@app.route('/training_demo/progress', methods=['GET'])
+def get_progress():
+    return jsonify(training_demo.get_progress())
+
+
+@app.route('/training_demo/reset', methods=['POST'])
+def reset_training_state():
+    training_demo.reset_training()
+    return jsonify({'status': 'reset'})
 
 
 if __name__ == '__main__':
