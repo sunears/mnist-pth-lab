@@ -162,6 +162,19 @@ mnist-pth-lab/
 
 - `docs/` 目录包含学习笔记与英文/中文说明（`NOTES_INDEX.md` 提供索引）。
 
+### 笔记与可视化
+
+仓库新增学习笔记 `docs/notes/originals/生命循环.md`，对训练的“生命循环”做了详细解读（包括前向/反向传播、优化器更新、每个 batch 与 epoch 的度量等），并带有若干实用示例代码片段用于卷积核可视化。
+
+此外，本项目新增一个训练演示页面，可在浏览器中实时查看训练日志、训练/验证 Loss 与 Accuracy 曲线以及训练进度：
+
+```powershell
+run-uv.bat python -m mnist_pth_lab.webapp
+# 打开：http://localhost:5000/training_demo
+```
+
+笔记中也包含一个示例脚本（可将其保存为 `src/visualize_filters.py`）来可视化第一层卷积核，便于对比“未训练 vs 已训练”卷积核的差异与演化。详情请参阅对应笔记文件。
+
 ## GitHub Actions (CI/CD)
 
 在 GitHub Actions 中可使用 `astral-sh/setup-uv`：

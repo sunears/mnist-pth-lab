@@ -199,6 +199,19 @@ mnist-pth-lab/
 - `docs/linear计算过程.md` — Linear layer computation notes (Chinese).
 - `docs/targets_and_data_zh.md` — MNIST `data` vs `targets` explanation and examples (Chinese, in `docs/`).
 - `docs/targets_and_data_en.md` — Full English guide to `targets` and `data` (in `docs/`).
+
+### Notes & Visualizations
+
+We added a new learning note at `docs/notes/originals/生命循环.md` that thoroughly explains the training "life-cycle" (forward/backward passes, optimizer updates, per-batch and per-epoch metrics) and includes example snippets for visualizing convolutional filters.
+
+There is also a new training demo page that lets you watch training logs, loss/accuracy curves and progress in real time in your browser. To run the demo:
+
+```powershell
+run-uv.bat python -m mnist_pth_lab.webapp
+# then open: http://localhost:5000/training_demo
+```
+
+The note contains an example script you can save as `src/visualize_filters.py` to visualize the first-layer kernels before/after training. See the note for code and usage details.
 ```
 
 ## GitHub Actions (CI/CD)
