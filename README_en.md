@@ -93,6 +93,28 @@ Evaluate the trained model on the test set.
 ```bash
 ./run-uv.sh python -m mnist_pth_lab.eval --model models/mnist_cnn.pth --output-dir experiments/output
 ```
+
+### Run the Web App (visualization & live prediction)
+
+The project includes a small web application for drawing handwritten digits and visualizing convolution activations. By default it listens on `0.0.0.0:5000`.
+
+Windows (with `run-uv.bat`):
+```powershell
+run-uv.bat python -m mnist_pth_lab.webapp
+```
+
+Linux/macOS (with `run-uv.sh`):
+```bash
+./run-uv.sh python -m mnist_pth_lab.webapp
+```
+
+Or run directly inside an activated venv:
+```bash
+python -m mnist_pth_lab.webapp
+```
+
+Open `http://localhost:5000` in your browser to use the drawing canvas, predict, and view kernel activations.
+
 Check `experiments/output` for the evaluation report and confusion matrix.
 
 ## Manual Usage

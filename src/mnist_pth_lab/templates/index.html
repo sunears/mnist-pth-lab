@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MNIST Demo — 手写识别与卷积核可视化</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; }
+      #canvas { border: 1px solid #333; background: #fff; touch-action: none; }
+      .row { display:flex; gap:20px; margin-top:12px }
+      .col { flex:1 }
+      img.preview { width:140px; height:140px; image-rendering: pixelated; border:1px solid #ddd }
+    </style>
+  </head>
+  <body>
+    <h2>手写数字识别（MNIST）</h2>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <p>在画布上书写数字，然后点击 <strong>预测</strong> 或 <strong>可视化卷积激活</strong></p>
+
+    <canvas id="canvas" width="280" height="280"></canvas>
+    <div class="row">
+      <div class="col">
+        <button id="clear">清除</button>
+        <button id="predict">预测</button>
+        <button id="visualize">可视化卷积激活</button>
+      </div>
+      <div class="col">
+        <div id="result"></div>
+      </div>
+    </div>
+
+    <h3>卷积激活（Top kernels）</h3>
+    <div id="vis"></div>
+
+    <script src="{{ url_for('static', filename='vis.js') }}"></script>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'white'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.strokeStyle = 'black'; ctx.lineWidth = 16; ctx.lineCap='round';
+      let drawing = false;
+      function pos(e){
+        if(e.touches) e = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        return {x: (e.clientX-rect.left), y: (e.clientY-rect.top)};
+      }
+      canvas.addEventListener('pointerdown', (e)=>{ drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); });
+      canvas.addEventListener('pointermove', (e)=>{ if(!drawing) return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); });
+      canvas.addEventListener('pointerup', ()=>{ drawing=false; });
+      document.getElementById('clear').addEventListener('click', ()=>{ ctx.fillStyle='white'; ctx.fillRect(0,0,canvas.width,canvas.height); document.getElementById('result').innerHTML=''; document.getElementById('vis').innerHTML=''; });
+
+      function getImageDataURL(){ return canvas.toDataURL('image/png'); }
+
+      document.getElementById('predict').addEventListener('click', async ()=>{
+        const data = getImageDataURL();
+        const res = await fetch('/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:data})});
+        const j = await res.json();
+        if(j.error){ alert(j.error); return; }
+        const probs = j.probs;
+        let out = `<p>预测：<strong>${j.pred}</strong></p>`;
+        out += '<ol>' + probs.map((p,i)=>`<li>${i}: ${(p*100).toFixed(2)}%</li>`).join('') + '</ol>';
+        document.getElementById('result').innerHTML = out;
+      });
+
+      document.getElementById('visualize').addEventListener('click', async ()=>{
+        const data = getImageDataURL();
+        const res = await fetch('/visualize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:data, topk:6})});
+        const j = await res.json();
+        if(j.error){ alert(j.error); return; }
+        const vis = document.getElementById('vis'); vis.innerHTML='';
+        function renderOld(title, items, key){
+          // backward-compatible renderer (not used if vis.js present)
+          const div = document.createElement('div');
+          div.innerHTML = `<h4>${title}</h4>`;
+          const row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px';
+          items.forEach(it=>{
+            const col = document.createElement('div'); col.style.textAlign='center';
+            const img = document.createElement('img'); img.className='preview'; img.src = 'data:image/png;base64,' + (it[key]||it.image||it.kernel);
+            const lbl = document.createElement('div'); lbl.innerText = `ch:${it.channel} score:${(it.score||0).toFixed? (it.score).toFixed(3):''}`;
+            col.appendChild(img); col.appendChild(lbl); row.appendChild(col);
+          });
+          div.appendChild(row); vis.appendChild(div);
+        }
+        // prefer advanced render if available
+        if(window.renderGroup){
+          renderGroup('vis', j.conv1_top, 'image');
+          renderGroup('vis', j.kernels1, 'kernel');
+          renderGroup('vis', j.conv2_top, 'image');
+          renderGroup('vis', j.kernels2, 'kernel');
+        } else {
+          renderOld('conv1 top activations', j.conv1_top, 'image');
+          renderOld('conv1 kernels', j.kernels1, 'kernel');
+          renderOld('conv2 top activations', j.conv2_top, 'image');
+          renderOld('conv2 kernels', j.kernels2, 'kernel');
+        }
+      });
+    </script>
+  </body>
+</html>

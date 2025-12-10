@@ -89,6 +89,28 @@ run-uv.bat python -m mnist_pth_lab.pack_idx --images-dir unpacked_data\test\imag
 ./run-uv.sh python -m mnist_pth_lab.eval --model models/mnist_cnn.pth --output-dir experiments/output
 ```
 
+### 启动 Web 应用（可视化与在线预测）
+
+项目包含一个轻量 Web 应用用于在线手写输入识别与卷积核激活可视化。默认监听 `0.0.0.0:5000`。
+
+Windows（使用 `run-uv.bat`）：
+```powershell
+run-uv.bat python -m mnist_pth_lab.webapp
+```
+
+Linux/macOS（使用 `run-uv.sh`）：
+```bash
+./run-uv.sh python -m mnist_pth_lab.webapp
+```
+
+或在已经激活的虚拟环境中直接运行：
+```bash
+python -m mnist_pth_lab.webapp
+```
+
+打开浏览器并访问 `http://localhost:5000` 即可使用手写画布、预测与可视化功能。
+
+
 ## 手动使用方法（进阶）
 
 如果你更习惯手动创建虚拟环境和执行命令：

@@ -5,3 +5,5 @@ matplotlib
 scikit-learn
 tqdm
 seaborn
+flask
+Pillow
