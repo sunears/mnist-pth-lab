@@ -17,7 +17,6 @@ def linear_layer_demo():
         "\033[1;32mLinear layer state_dict:\033[0m\n%s",
         linear.state_dict()
     )
-
     input = Tensor([
         [1.0, 2.0, 3.0],
     ])
