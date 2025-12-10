@@ -70,13 +70,16 @@ def main():
         train=False,
         download=True
     )
+
     image = train_data.data[0]
     label = train_data.targets[0]
     logger = get_logger("Test")
+    logger.info(type(train_data))
+    logger.info(isinstance(train_data, torchvision.datasets.MNIST))
     logger.info(train_data.data.shape)
     logger.info(test_data.data.shape)
     logger.info("Label: %d", label.item())
-    logger.info("\n%s",image)
+    logger.info("image:\n%s",image)
     plt.imshow(image, cmap='gray')
     plt.title(f"Label: {label.item()}")
     plt.show()
