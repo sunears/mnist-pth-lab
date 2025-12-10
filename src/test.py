@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 from utils import get_logger
 from torch import nn
 from torch import Tensor
+# module-level shared logger for this script
+logger = get_logger("Test")
 def linear_layer_demo():
     linear = nn.Linear(3, 5)
     linear.state_dict()   # 只是触发一下参数初始化
-    
-    logger = get_logger("Test")
     
     # 先打印一个空行，让输出更清爽
     logger.info("")  # 或者 logger.info("\n")
@@ -73,7 +73,6 @@ def dataset_demo():
 
     image = train_data.data[0]
     label = train_data.targets[0]
-    logger = get_logger("Test")
     logger.info(type(train_data))
     logger.info(isinstance(train_data, torchvision.datasets.MNIST))
     logger.info(train_data.data.shape)
@@ -88,7 +87,6 @@ def print_pth():
     model_path = os.path.join(data_dir, 'mnist_cnn.pth')
     # 使用 map_location 确保在 CPU 上也能加载 GPU 保存的模型
     state_dict = torch.load(model_path, map_location='cpu')
-    logger = get_logger("Test")
     logger.info("Model state_dict:")
     for key, value in state_dict.items():
         # 安全处理：可能 value 不是 Tensor（例如嵌套 dict/列表）
@@ -150,7 +148,7 @@ def print_pth2():
         except Exception as e:
             print(f"加载文件时发生错误：{e}")
 def main():
-    # linear_layer_demo()
-    print_pth()
+    linear_layer_demo()
+    # print_pth()
 if __name__ == "__main__":
     main()
