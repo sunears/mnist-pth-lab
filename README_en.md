@@ -30,7 +30,11 @@ We provide a one-click runner script `run-uv.bat` that handles environment creat
 Train the model for 5 epochs (default) and save to `models/mnist_cnn.pth`.
 
 ```cmd
-run-uv.bat src\train.py --epochs 5 --batch-size 64 --save-path models\mnist_cnn.pth
+:: Recommended (module form, src-layout)
+run-uv.bat python -m mnist_pth_lab.train --epochs 5 --batch-size 64 --save-path models\mnist_cnn.pth
+
+:: Backwards-compatible: run script directly
+run-uv.bat python src\train.py --epochs 5 --batch-size 64 --save-path models\mnist_cnn.pth
 ```
 *Note: The first run will automatically create a virtual environment in `.venv` and install dependencies.*
 
@@ -38,7 +42,7 @@ run-uv.bat src\train.py --epochs 5 --batch-size 64 --save-path models\mnist_cnn.
 Evaluate the trained model on the test set.
 
 ```cmd
-run-uv.bat src\eval.py --model models\mnist_cnn.pth --output-dir experiments\output
+run-uv.bat python -m mnist_pth_lab.eval --model models\mnist_cnn.pth --output-dir experiments\output
 ```
 Check `experiments\output` for the evaluation report and confusion matrix.
 
@@ -49,22 +53,22 @@ This project provides scripts to convert between MNIST IDX format and image form
 Unpack IDX data into an image folder and a CSV label file.
 
 ```cmd
-:: Unpack training data
-run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\train-images-idx3-ubyte --labels-idx data\MNIST\raw\train-labels-idx1-ubyte --out-dir unpacked_data\train
+:: Unpack training data (recommended module form)
+run-uv.bat python -m mnist_pth_lab.unpack_idx --images-idx data\MNIST\raw\train-images-idx3-ubyte --labels-idx data\MNIST\raw\train-labels-idx1-ubyte --out-dir unpacked_data\train
 
 :: Unpack test data
-run-uv.bat src\unpack_idx.py --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data\test
+run-uv.bat python -m mnist_pth_lab.unpack_idx --images-idx data\MNIST\raw\t10k-images-idx3-ubyte --labels-idx data\MNIST\raw\t10k-labels-idx1-ubyte --out-dir unpacked_data\test
 ```
 
 #### Pack (PNG -> IDX)
 Pack an image folder back into IDX format (useful for creating custom datasets).
 
 ```cmd
-:: Pack training data
-run-uv.bat src\pack_idx.py --images-dir unpacked_data\train\images --labels-csv unpacked_data\train\labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
+:: Pack training data (recommended module form)
+run-uv.bat python -m mnist_pth_lab.pack_idx --images-dir unpacked_data\train\images --labels-csv unpacked_data\train\labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
 
 :: Pack test data
-run-uv.bat src\pack_idx.py --images-dir unpacked_data\test\images --labels-csv unpacked_data\test\labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
+run-uv.bat python -m mnist_pth_lab.pack_idx --images-dir unpacked_data\test\images --labels-csv unpacked_data\test\labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
 ```
 
 ## Quick Start (Linux/macOS)
@@ -75,7 +79,11 @@ We provide a one-click runner script `run-uv.sh` that handles environment creati
 Train the model for 5 epochs (default) and save to `models/mnist_cnn.pth`.
 
 ```bash
-./run-uv.sh src/train.py --epochs 5 --batch-size 64 --save-path models/mnist_cnn.pth
+# Recommended (module form)
+./run-uv.sh python -m mnist_pth_lab.train --epochs 5 --batch-size 64 --save-path models/mnist_cnn.pth
+
+# Backwards-compatible: run script directly
+./run-uv.sh python src/train.py --epochs 5 --batch-size 64 --save-path models/mnist_cnn.pth
 ```
 *Note: The first run will automatically create a virtual environment in `.venv` and install dependencies.*
 
@@ -83,7 +91,7 @@ Train the model for 5 epochs (default) and save to `models/mnist_cnn.pth`.
 Evaluate the trained model on the test set.
 
 ```bash
-./run-uv.sh src/eval.py --model models/mnist_cnn.pth --output-dir experiments/output
+./run-uv.sh python -m mnist_pth_lab.eval --model models/mnist_cnn.pth --output-dir experiments/output
 ```
 Check `experiments/output` for the evaluation report and confusion matrix.
 
@@ -104,8 +112,8 @@ If you prefer running commands manually, you can follow these steps:
     
     # Install dependencies
     uv pip install -r requirements.txt
-    # OR install from pyproject.toml
-    uv pip install .
+    # OR (recommended for development) install editable package
+    uv pip install -e .
     ```
 
 ## Data Processing Tools
@@ -116,31 +124,29 @@ This project provides scripts to convert between MNIST IDX format and image form
 Unpack IDX data into an image folder and a CSV label file.
 
 ```bash
-# Unpack training data
-./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/train-images-idx3-ubyte --labels-idx data/MNIST/raw/train-labels-idx1-ubyte --out-dir unpacked_data/train
+./run-uv.sh python -m mnist_pth_lab.unpack_idx --images-idx data/MNIST/raw/train-images-idx3-ubyte --labels-idx data/MNIST/raw/train-labels-idx1-ubyte --out-dir unpacked_data/train
 
 # Unpack test data
-./run-uv.sh src/unpack_idx.py --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data/test
+./run-uv.sh python -m mnist_pth_lab.unpack_idx --images-idx data/MNIST/raw/t10k-images-idx3-ubyte --labels-idx data/MNIST/raw/t10k-labels-idx1-ubyte --out-dir unpacked_data/test
 ```
 
 ### 2. Pack (PNG -> IDX)
 Pack an image folder back into IDX format (useful for creating custom datasets).
 
 ```bash
-# Pack training data
-./run-uv.sh src/pack_idx.py --images-dir unpacked_data/train/images --labels-csv unpacked_data/train/labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
+./run-uv.sh python -m mnist_pth_lab.pack_idx --images-dir unpacked_data/train/images --labels-csv unpacked_data/train/labels.csv --out-images-idx new-train-images-idx3-ubyte.gz --out-labels-idx new-train-labels-idx1-ubyte.gz
 
 # Pack test data
-./run-uv.sh src/pack_idx.py --images-dir unpacked_data/test/images --labels-csv unpacked_data/test/labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
+./run-uv.sh python -m mnist_pth_lab.pack_idx --images-dir unpacked_data/test/images --labels-csv unpacked_data/test/labels.csv --out-images-idx new-test-images-idx3-ubyte.gz --out-labels-idx new-test-labels-idx1-ubyte.gz
 ```
 
 2.  **Run Scripts**:
     ```bash
-    # Train
-    python src/train.py --epochs 5 --save-path models/mnist_cnn.pth
+    # Train (module form)
+    python -m mnist_pth_lab.train --epochs 5 --save-path models/mnist_cnn.pth
     
-    # Eval
-    python src/eval.py --model models/mnist_cnn.pth
+    # Eval (module form)
+    python -m mnist_pth_lab.eval --model models/mnist_cnn.pth
     ```
 
 ## File Structure
