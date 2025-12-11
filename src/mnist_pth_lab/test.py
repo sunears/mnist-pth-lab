@@ -61,7 +61,7 @@ def print_pth():
 
 def main():
     # linear_layer_demo()
-    print_pth()
-
+    # print_pth()
+    dataset_demo()
 if __name__ == "__main__":
     main()
