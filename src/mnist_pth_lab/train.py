@@ -15,7 +15,9 @@ from mnist_pth_lab.utils import set_seed, save_model, get_logger
 
 
 def train(args):
+    # 固定随机种子，保证实验可复现
     set_seed(args.seed)
+    # 自动选择设备，若未指定或无 GPU 则回落到 CPU
     device = torch.device(args.device if torch.cuda.is_available() and args.device == 'cuda' else 'cpu')
     logger = get_logger("Train")
     logger.info(f"Using device: {device}")
@@ -23,8 +25,10 @@ def train(args):
     os.makedirs(os.path.dirname(args.save_path), exist_ok=True)
     os.makedirs("experiments", exist_ok=True)
 
+    # 构建数据加载器（默认 10% 验证集）
     train_loader, val_loader, _ = get_dataloaders(args.batch_size, args.num_workers, seed=args.seed)
 
+    # 构建模型与优化器
     model = build_model().to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     criterion = nn.CrossEntropyLoss()
@@ -59,6 +63,7 @@ def train(args):
         train_loss /= total
         train_acc = correct / total
 
+        # 验证阶段不计算梯度
         model.eval()
         val_loss = 0.0
         correct = 0
@@ -84,6 +89,7 @@ def train(args):
         history['val_loss'].append(val_loss)
         history['val_acc'].append(val_acc)
 
+        # 记录最佳验证准确率并保存模型
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             save_model(model, args.save_path)

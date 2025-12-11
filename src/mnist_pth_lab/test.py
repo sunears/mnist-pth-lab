@@ -11,6 +11,7 @@ logger = get_logger("Test")
 
 
 def linear_layer_demo():
+    """演示一个线性层的权重/偏置形状及前向输出"""
     linear = nn.Linear(3, 5)
     linear.state_dict()
     logger.info("")
@@ -27,6 +28,7 @@ def linear_layer_demo():
 
 
 def dataset_demo():
+    """下载/演示 MNIST 测试集，并用单个样本做前向推理"""
     # 获取项目根目录（向上三级：test.py -> mnist_pth_lab -> src -> 项目根目录）
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     data_dir = os.path.join(project_root, 'datasets')
@@ -39,10 +41,12 @@ def dataset_demo():
     logger.info("type(test_data): %s", type(test_data))
     logger.info("isinstance(test_data, torchvision.datasets.MNIST): %s", isinstance(test_data, torchvision.datasets.MNIST))
     logger.info("test_data.data.shape: %s", test_data.data.shape)
+    # 将 (N,28,28) 展平成 (N,784)，方便做向量化演示
     flat_test_data = test_data.data.view(10000,784)
     logger.info("flat_test_data.shape: %s", flat_test_data.shape)
     logger.info("label of test_data.targets[88]: %s", label)
     # logger.info("image of test_data.data[0]:\n%s", image)
+    # 简单归一化到 [0,1]
     float_flat_test_data = flat_test_data.float() / 255.0
     logger.info("float_flat_test_data.shape: %s", float_flat_test_data.shape)
     # logger.info("\nfloat_flat_test_data.data[1]: %s", float_flat_test_data.data[1])
@@ -100,7 +104,7 @@ def print_pth():
 
 def main():
     # linear_layer_demo()
-    # print_pth()
-    dataset_demo()
+    print_pth()
+    # dataset_demo()
 if __name__ == "__main__":
     main()

@@ -12,7 +12,9 @@ from mnist_pth_lab.utils import load_model, get_logger, set_seed
 
 
 def evaluate(args):
+    # 固定随机种子，保证评估结果可复现
     set_seed(42)
+    # 自动选择设备，若未指定或无 GPU 则回落到 CPU
     device = torch.device(args.device if torch.cuda.is_available() and args.device == 'cuda' else 'cpu')
     logger = get_logger("Eval")
     os.makedirs(args.output_dir, exist_ok=True)
@@ -41,6 +43,7 @@ def evaluate(args):
             all_labels.extend(labels.numpy())
             images_list.extend(images.cpu())
 
+    # 计算整体准确率与分类报告
     acc = accuracy_score(all_labels, all_preds)
     logger.info(f"整体准确率 (Overall Accuracy): {acc:.4f}")
 

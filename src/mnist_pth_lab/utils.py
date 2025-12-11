@@ -7,6 +7,7 @@ import os
 
 
 def set_seed(seed=42):
+    """设置随机种子，确保训练/评估可复现"""
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -19,12 +20,14 @@ def set_seed(seed=42):
 
 
 def save_model(model: nn.Module, path: str) -> None:
+    """保存模型参数到指定路径"""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     torch.save(model.state_dict(), path)
     print(f"[Info] 模型已保存至 {path}")
 
 
 def load_model(model_instance: nn.Module, path: str, device: torch.device) -> nn.Module:
+    """从指定路径加载模型参数，并移动到目标设备"""
     model_instance.load_state_dict(torch.load(path, map_location=device))
     model_instance.to(device)
     print(f"[Info] 模型已从 {path} 加载")
@@ -32,6 +35,7 @@ def load_model(model_instance: nn.Module, path: str, device: torch.device) -> nn
 
 
 def get_logger(name, level=logging.INFO):
+    """创建简单控制台 Logger，避免重复添加 Handler"""
     logger = logging.getLogger(name)
     if not logger.handlers:
         logger.setLevel(level)
