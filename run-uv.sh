@@ -42,6 +42,9 @@ if [ -z "$1" ]; then
     echo "[Info] No script specified. Opening interactive shell..."
     echo "[Tip] You can verify environment with: python --version"
     "$UV_EXE" run bash
+elif [ "$1" == "-test" ]; then
+    echo "[Info] Running test script: src/mnist_pth_lab/test.py"
+    "$UV_EXE" run "$(dirname "$0")/src/mnist_pth_lab/test.py"
 else
     echo "[Info] Running: $@"
     "$UV_EXE" run "$@"

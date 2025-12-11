@@ -48,6 +48,15 @@ run-uv.bat python -m mnist_pth_lab.eval --model models\mnist_cnn.pth --output-di
 
 查看 `experiments\output` 获取评估报告和混淆矩阵。
 
+### 测试
+快速运行测试脚本（包含数据集演示、模型加载等功能）：
+
+```cmd
+run-uv.bat -test
+```
+
+这等同于运行 `src\mnist_pth_lab\test.py`。
+
 ### 数据处理工具（IDX <-> PNG）
 将 IDX 格式数据解包为图片和 CSV 标签，或将图片打包为 IDX。
 
@@ -88,6 +97,14 @@ run-uv.bat python -m mnist_pth_lab.pack_idx --images-dir unpacked_data\test\imag
 ```bash
 ./run-uv.sh python -m mnist_pth_lab.eval --model models/mnist_cnn.pth --output-dir experiments/output
 ```
+
+测试：
+
+```bash
+./run-uv.sh -test
+```
+
+这等同于运行 `src/mnist_pth_lab/test.py`。
 
 ### 启动 Web 应用（可视化与在线预测）
 

@@ -94,6 +94,15 @@ Evaluate the trained model on the test set.
 ./run-uv.sh python -m mnist_pth_lab.eval --model models/mnist_cnn.pth --output-dir experiments/output
 ```
 
+### 3. Testing
+Quickly run the test script:
+
+```bash
+./run-uv.sh -test
+```
+
+This is equivalent to running `src/mnist_pth_lab/test.py`.
+
 ### Run the Web App (visualization & live prediction)
 
 The project includes a small web application for drawing handwritten digits and visualizing convolution activations. By default it listens on `0.0.0.0:5000`.
