@@ -33,17 +33,21 @@ def dataset_demo():
     train_data = torchvision.datasets.MNIST(root=data_dir, train=True, download=True)
     test_data = torchvision.datasets.MNIST(root=data_dir, train=False, download=True)
 
-    image = train_data.data[0]
-    label = train_data.targets[0]
-    logger.info(type(train_data))
-    logger.info(isinstance(train_data, torchvision.datasets.MNIST))
-    logger.info(train_data.data.shape)
-    logger.info(test_data.data.shape)
-    logger.info("Label: %d", label.item())
-    logger.info("image:\n%s", image)
-    plt.imshow(image, cmap='gray')
-    plt.title(f"Label: {label.item()}")
-    plt.show()
+    image = test_data.data[0]
+    label = test_data.targets[0]
+    logger.info("type(test_data): %s", type(test_data))
+    logger.info("isinstance(test_data, torchvision.datasets.MNIST): %s", isinstance(test_data, torchvision.datasets.MNIST))
+    logger.info("test_data.data.shape: %s", test_data.data.shape)
+    flat_test_data = test_data.data.view(10000,784)
+    logger.info("flat_test_data.shape: %s", flat_test_data.shape)
+    # logger.info("label of test_data.targets[0]: %s", test_data.targets[0])
+    # logger.info("image of test_data.data[0]:\n%s", image)
+    float_flat_test_data = flat_test_data.float() / 255.0
+    logger.info("float_flat_test_data.shape: %s", float_flat_test_data.shape)
+    logger.info("\nfloat_flat_test_data.data[1]: %s", float_flat_test_data.data[1])
+    # plt.imshow(image, cmap='gray')
+    # plt.title(f"Label: {label.item()}")
+    # plt.show()
 
 
 def print_pth():
