@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 import random
 import numpy as np
 import logging
@@ -17,13 +18,13 @@ def set_seed(seed=42):
     print(f"[Info] 随机种子已设置为 {seed}")
 
 
-def save_model(model, path):
+def save_model(model: nn.Module, path: str) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     torch.save(model.state_dict(), path)
     print(f"[Info] 模型已保存至 {path}")
 
 
-def load_model(model_instance, path, device):
+def load_model(model_instance: nn.Module, path: str, device: torch.device) -> nn.Module:
     model_instance.load_state_dict(torch.load(path, map_location=device))
     model_instance.to(device)
     print(f"[Info] 模型已从 {path} 加载")
