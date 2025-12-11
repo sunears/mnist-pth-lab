@@ -26,7 +26,9 @@ def linear_layer_demo():
 
 
 def dataset_demo():
-    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'datasets')
+    # 获取项目根目录（向上三级：test.py -> mnist_pth_lab -> src -> 项目根目录）
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    data_dir = os.path.join(project_root, 'datasets')
     os.makedirs(data_dir, exist_ok=True)
     train_data = torchvision.datasets.MNIST(root=data_dir, train=True, download=True)
     test_data = torchvision.datasets.MNIST(root=data_dir, train=False, download=True)
@@ -45,8 +47,9 @@ def dataset_demo():
 
 
 def print_pth():
-    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
-    model_path = os.path.join(data_dir, 'mnist_cnn.pth')
+    # 获取项目根目录（向上三级：test.py -> mnist_pth_lab -> src -> 项目根目录）
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    model_path = os.path.join(project_root, 'models', 'mnist_cnn.pth')
     state_dict = torch.load(model_path, map_location='cpu')
     logger.info("Model state_dict:")
     for key, value in state_dict.items():
@@ -57,8 +60,8 @@ def print_pth():
 
 
 def main():
-    linear_layer_demo()
-
+    # linear_layer_demo()
+    print_pth()
 
 if __name__ == "__main__":
     main()

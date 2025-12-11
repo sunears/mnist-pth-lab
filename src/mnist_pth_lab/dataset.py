@@ -10,7 +10,9 @@ def get_dataloaders(batch_size=64, num_workers=4, val_split=0.1, seed=42):
         transforms.Normalize((0.1307,), (0.3081,))
     ])
 
-    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+    # 获取项目根目录（向上三级：dataset.py -> mnist_pth_lab -> src -> 项目根目录）
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    data_dir = os.path.join(project_root, 'data')
     os.makedirs(data_dir, exist_ok=True)
 
     full_train_dataset = datasets.MNIST(root=data_dir, train=True, download=True, transform=transform)
