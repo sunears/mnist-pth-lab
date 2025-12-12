@@ -101,10 +101,23 @@ def print_pth():
         else:
             logger.info("%s: %s", key, str(type(value)))
 
+class Light:
+    def __enter__(self):
+        try:
+            print("💡 开灯")
+        except UnicodeEncodeError:
+            print("[开灯]")
+    def __exit__(self, *args):
+        try:
+            print("🌙 关灯")
+        except UnicodeEncodeError:
+            print("[关灯]")
 
 def main():
     # linear_layer_demo()
-    print_pth()
-    # dataset_demo()
+    # print_pth()
+    # dataset_demo()    
+    with Light():
+        print("灯亮着，我可以工作了")
 if __name__ == "__main__":
     main()
